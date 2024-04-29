@@ -5,35 +5,38 @@ import * as Yup from 'yup'
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { addTask, updateTask } from "../redux/tasks/action";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import TextError from "../components/atoms/TextError";
 
 export default function FormTask() {
+  const navigate = useNavigate()
   const location = useLocation()
   const { state } = location
   const dispatch = useDispatch()
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(),
     date: Yup.date().required(),
-    is_completed: Yup.boolean().required(),
   })
   const formik = useFormik({
     initialValues: {
-      title: state.title ?? '',
-      date: state.date ?? '',
-      is_completed: state.is_completed ?? false
+      title: state?.title ?? '',
+      date: state?.date ?? '',
+      is_completed: state?.is_completed ?? false
     },
     validationSchema,
     onSubmit: (task) => {
       if (state) {
         dispatch(updateTask(state.id, task))
+        alert('done')
+        navigate('/')
       } else {
         dispatch(addTask({
           id: +new Date(),
           ...task
         }))
+        alert('done')
         formik.handleReset()
       }
-      alert('done')
     }
   })
 
@@ -47,6 +50,9 @@ export default function FormTask() {
             value={formik.values.title}
             handleOnChange={formik.handleChange}
           />
+          {(formik.touched.title && formik.errors.title) ? (
+            <TextError>{formik.errors.title}</TextError>
+          ) : null}
         </Label>
         <Label label="Due Date">
           <Input
@@ -56,6 +62,9 @@ export default function FormTask() {
             value={formik.values.date}
             handleOnChange={formik.handleChange}
           />
+          {(formik.touched.date && formik.errors.date) ? (
+            <TextError>{formik.errors.date}</TextError>
+          ) : null}
         </Label>
         <Checkbox
           value={formik.values.is_completed}
