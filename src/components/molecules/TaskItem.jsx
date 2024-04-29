@@ -12,7 +12,7 @@ export default function TaskItem({ task }) {
   return (
     <div className="card border-2 w-full">
       <div className="card-body">
-        <div className="flex justify-between align-center">
+        <div className="flex justify-between align-center gap-3">
           <hgroup>
             <h1 className="text-4xl font-bold">{task.title}</h1>
             <div className="flex gap-5 mt-3">
@@ -21,9 +21,9 @@ export default function TaskItem({ task }) {
             </div>
           </hgroup>
           <button
-            className="btn my-auto"
+            className="btn my-auto ml-auto"
             onClick={() => navigate(`/task/${task.id}/edit`, {
-              state: item
+              state: task
             })}
           >
             Edit
