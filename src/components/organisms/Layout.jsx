@@ -8,7 +8,7 @@ export default function Layout() {
       <header>
         <nav className="flex gap-3">
           <button onClick={() => navigate('/')} className="btn btn-primary">Home</button>
-          <button onClick={() => navigate('/create')} className="btn btn-primary">Create</button>
+          <button onClick={() => navigate('/task/create')} className="btn btn-primary">Create</button>
         </nav>
       </header>
       <main className="py-10">
