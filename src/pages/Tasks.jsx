@@ -15,14 +15,20 @@ export default function Tasks() {
 
   return (
     <div className="flex flex-col gap-5">
-      {tasks && tasks.map((item, index) => (
-        <TaskItem
-          task={item}
-          toggleTask={() => handleToggle(item.id)}
-          deleteTask={() => handleDelete(item.id)}
-          key={index}
-        />
-      ))}
+      {tasks.length > 0 ? (
+        <>
+          {tasks.map((item, index) => (
+            <TaskItem
+              task={item}
+              toggleTask={() => handleToggle(item.id)}
+              deleteTask={() => handleDelete(item.id)}
+              key={index}
+            />
+          ))}
+        </>
+      ) : (
+        <h1 className="text-center font-bold text-3xl animate-pulse">you have no task...</h1>
+      )}
     </div>
   )
 }

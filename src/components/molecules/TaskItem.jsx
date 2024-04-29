@@ -13,8 +13,8 @@ export default function TaskItem({ task, toggleTask, deleteTask }) {
           <hgroup>
             <h1 className="text-4xl font-bold">{task.title}</h1>
             <div className="flex gap-5 mt-3">
-              <span className="text-xs">{task.date}</span>
-              <span className="text-xs">{task.is_completed ? 'complete' : 'not complete'}</span>
+              <span className="text-sm">Due data: {task.date}</span>
+              <span className={`text-sm duration-500 font-semibold ${task.is_completed ? 'text-success' : 'text-error'}`}>{task.is_completed ? 'Complete' : 'Not Complete'}</span>
             </div>
           </hgroup>
           <button

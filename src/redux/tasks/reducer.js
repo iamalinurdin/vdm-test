@@ -3,13 +3,13 @@ import { ActionType } from "./action";
 export default function taskReducer(tasks = [
   {
     id: 'task-2024-05-01-abc',
-    title: 'tidur',
+    title: 'Workout and jogging',
     date: '2024-05-01',
     is_completed: false
   },
   {
     id: 'task-2024-05-02-abc',
-    title: 'makan',
+    title: 'Read a book',
     date: '2024-05-02',
     is_completed: false
   },
