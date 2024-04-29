@@ -4,9 +4,12 @@ import Label from "../components/atoms/Label";
 import * as Yup from 'yup'
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { addTask } from "../redux/tasks/action";
+import { addTask, updateTask } from "../redux/tasks/action";
+import { useLocation } from "react-router-dom";
 
 export default function FormTask() {
+  const location = useLocation()
+  const { state } = location
   const dispatch = useDispatch()
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(),
@@ -15,18 +18,22 @@ export default function FormTask() {
   })
   const formik = useFormik({
     initialValues: {
-      title: '',
-      date: '',
-      is_completed: false
+      title: state.title ?? '',
+      date: state.date ?? '',
+      is_completed: state.is_completed ?? false
     },
     validationSchema,
     onSubmit: (task) => {
-      dispatch(addTask({
-        id: +new Date(),
-        ...task
-      }))
+      if (state) {
+        dispatch(updateTask(state.id, task))
+      } else {
+        dispatch(addTask({
+          id: +new Date(),
+          ...task
+        }))
+        formik.handleReset()
+      }
       alert('done')
-      formik.handleReset()
     }
   })
 
@@ -52,7 +59,7 @@ export default function FormTask() {
         </Label>
         <Checkbox
           value={formik.values.is_completed}
-          defaultChecked={false}
+          defaultChecked={formik.values.is_completed}
           name="is_completed"
           label="Is Completed?"
           handleOnChange={formik.handleChange}

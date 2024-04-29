@@ -36,7 +36,19 @@ export default function taskReducer(tasks = [
         return item
       })
     case ActionType.UPDATE_TASK:
-      return tasks
+      console.log(action.payload)
+
+      return tasks.map((item) => {
+        if (item.id == action.payload.id) {
+          return {
+            title: action.payload.task.title,
+            date: action.payload.task.date,
+            is_completed: action.payload.task.is_completed,
+          }
+        }
+
+        return item
+      })
     default:
       return tasks
   }
