@@ -1,13 +1,7 @@
-import { useDispatch } from "react-redux"
-import { toggleTask } from "../../redux/tasks/action"
 import { useNavigate } from "react-router-dom"
 
-export default function TaskItem({ task }) {
-  const dispatch = useDispatch()
+export default function TaskItem({ task, toggleTask, deleteTask }) {
   const navigate = useNavigate()
-  const handleToggle = () => {
-    dispatch(toggleTask({ id: task.id }))
-  }
 
   return (
     <div className="card border-2 w-full">
@@ -17,7 +11,7 @@ export default function TaskItem({ task }) {
             <h1 className="text-4xl font-bold">{task.title}</h1>
             <div className="flex gap-5 mt-3">
               <span className="text-xs">{task.date}</span>
-              <span className="text-xs">{task.isComplete ? 'complete' : 'not finish'}</span>
+              <span className="text-xs">{task.is_completed ? 'complete' : 'not complete'}</span>
             </div>
           </hgroup>
           <button
@@ -28,7 +22,13 @@ export default function TaskItem({ task }) {
           >
             Edit
           </button>
-          <button className="btn my-auto" onClick={handleToggle}>
+          <button
+            className="btn my-auto ml-auto"
+            onClick={deleteTask}
+          >
+            Delete
+          </button>
+          <button className="btn my-auto" onClick={toggleTask}>
             Set as Done
           </button>
         </div>

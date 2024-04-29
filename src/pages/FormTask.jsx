@@ -21,7 +21,10 @@ export default function FormTask() {
     },
     validationSchema,
     onSubmit: (task) => {
-      dispatch(addTask(task))
+      dispatch(addTask({
+        id: +new Date(),
+        ...task
+      }))
       alert('done')
       formik.handleReset()
     }
